@@ -68,7 +68,12 @@ KT.Round.prototype.updateScore = function (result) {
 KT.getRandKana = function () {
 	var kana = this.kana;
 	var r = Math.floor(Math.random() * this.kana.length);
-	return kana[r];
+
+	if (sessionStorage.mode === 'hiragana' && !kana[r].hiragana) {
+		this.getRandKana();
+	} else {
+		return kana[r];
+	}
 };
 
 KT.createRound = function () {
@@ -96,6 +101,11 @@ $('#kana-input').keypress(function (e) {
 $('.toggle').click(function (e) {
 	e.preventDefault();
 	round.setMode($(this).data('value'));
+	console.log(round.kana.hiragana);
+	if (!round.kana.hiragana) {
+		round = KT.createRound();
+		round.displayRound();
+	}
 });
 
 $('#skip').click(function (e) {

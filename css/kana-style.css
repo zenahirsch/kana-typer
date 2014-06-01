@@ -73,6 +73,10 @@ a:active {
 	margin-bottom: 0.5em;
 }
 
+#helper strong {
+	color: rgba(100, 0, 100, 0.5);
+}
+
 #kana-input {
 	border: 0;
 	color: rgba(100, 0, 100, 1);

@@ -122,7 +122,7 @@ KT.getMode = function () {
 	var str = window.location.search.substring(1);
 	var queries = str.split('&');
 	var i = 0;
-	var mode = null;
+	var mode = 'typing';
 
 	for (i = 0; i < queries.length; i++) {
 		query = queries[i].split('=');
@@ -138,7 +138,7 @@ KT.getSyllabary = function () {
 	var str = window.location.search.substring(1);
 	var queries = str.split('&');
 	var i = 0;
-	var syllabary = null;
+	var syllabary = 'hiragana';
 
 	for (i = 0; i < queries.length; i++) {
 		query = queries[i].split('=');

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Kana Typer</title>
+	<link rel="stylesheet" type="text/css" href="css/kana-style.css" />
+	<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+	</head>
+	<body>
+		<div id="wrapper">
+			<div class="row">
+				<div class="col half">
+					<div id="practicing-toggles">
+						practicing <a href="http://google.com" class="toggle" id="toggle-hiragana" data-value="hiragana">hiragana</a> / <a href="http://google.com" class="toggle" id="toggle-katakana" data-value="katakana">katakana</a>
+					</div>
+				</div>
+				<div class="col half">
+					<div id="status-display">
+						<span class="score" id="score-correct">0</span> correct / <span class="score" id="score-incorrect">0</span> incorrect / <a id="skip" href="">skip</a>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col full">
+					<div id="sound"></div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col full">
+					<div id="helper"></div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col full">
+					<div id="kana">
+						<input type="text" placeholder="" name="kana-input" id="kana-input" />
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col full">
+					<p id="by-line">a little test project by <a href="http://github.com/zenahirsch/">zena hirsch</a>
+				</div>
+			</div>
+		</div>
+
+		<script src="js/kana.js"></script>
+    	<script src="js/kana-typer.js"></script>
+	</body>
+</html>

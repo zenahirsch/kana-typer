@@ -107,3 +107,35 @@ a:active {
 	text-align: center;
 	margin-top: 7em;
 }
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px) {
+	body {
+		padding-top: 4em;
+		font-size: 18px;
+	}
+
+	#wrapper {
+		width: 800px;
+	}
+
+	.third {
+		clear: left;
+		width: 100%;
+		margin-bottom: 0.5em;
+	}
+
+	.left, .center, .right {
+		text-align: center;
+		font-size: 3em;
+	}
+
+	#answer-input {
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		margin: 0 auto;
+	}
+}

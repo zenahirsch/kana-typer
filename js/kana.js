@@ -43,7 +43,7 @@ KT.kana = [
 		katakana: 'キ'
 	}, {
 		sound: 'gi',
-		helper: '<strong>gee</strong>se',
+		helper: 'as in <strong>gee</strong>se',
 		hiragana: 'ぎ',
 		katakana: 'ギ'
 	}, {

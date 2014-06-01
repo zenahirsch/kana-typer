@@ -234,3 +234,7 @@ $('#skip').click(function (e) {
 	round = KT.createRound();
 	round.displayRound();
 });
+
+$('#reset').click(function (e) {
+	round.setUpScoreBoard();
+});

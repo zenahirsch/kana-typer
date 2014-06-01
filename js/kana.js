@@ -137,7 +137,7 @@ KT.kana = [
 		hiragana: 'だ',
 		katakana: 'ダ'
 	}, {
-		sound: 'ti',
+		sound: 'chi',
 		helper: 'as in <strong>tea</strong>',
 		hiragana: 'ち',
 		katakana: 'チ'

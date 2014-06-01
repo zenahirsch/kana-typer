@@ -15,15 +15,17 @@ KT.Round.prototype.displayRound = function () {
 	input.val('').focus();
 
 	if (mode === 'typing') {
+		prompt.css('font-size', '8em');
 		prompt.html(this.kana.sound).css('display', 'none').fadeIn();
 		helper.html(this.kana.helper).css('display', 'none').css('visibility', 'visible').fadeIn();
 	} else if (mode === 'reading') {
+		prompt.css('font-size', '10.75em');
 		if (syllabary === 'hiragana') {
 			prompt.html(this.kana.hiragana).css('display', 'none').fadeIn();
-			helper.html('no hint!').css('visibility', 'hidden');
+			helper.css('display', 'none');
 		} else if (syllabary === 'katakana') {
 			prompt.html(this.kana.katakana).css('display', 'none').fadeIn();
-			helper.html('no hint!').css('visibility', 'hidden');
+			helper.css('display', 'none');
 		}
 	}
 	input.css('display', 'none').fadeIn();

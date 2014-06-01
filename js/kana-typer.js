@@ -1,46 +1,100 @@
 KT.Round = function () {};
 
 KT.Round.prototype.resetColor = function () {
-	$('#kana-input').css('color', 'rgba(100, 0, 100, 1)');
+	$('#answer-input').css('color', 'rgba(100, 0, 100, 1)');
 };
 
 KT.Round.prototype.displayRound = function () {
+	var mode = sessionStorage.mode;
+	var syllabary = sessionStorage.syllabary;
+
 	this.resetColor();
-	$('#kana-input').val('').fadeIn().focus();
-	$('#sound').html(this.kana.sound).css('display', 'none').fadeIn();
-	$('#helper').html(this.kana.helper).css('display', 'none').fadeIn();
-	$('#kana-input').css('display', 'none').fadeIn();
+	$('#answer-input').val('').focus();
+
+	if (mode === 'typing') {
+		$('#prompt').html(this.kana.sound).css('display', 'none').fadeIn();
+		$('#helper').html(this.kana.helper).css('display', 'none').fadeIn();
+	} else if (mode === 'reading') {
+		if (syllabary === 'hiragana') {
+			$('#prompt').html(this.kana.hiragana).css('display', 'none').fadeIn();
+			$('#helper').html('');
+		} else if (syllabary === 'katakana') {
+			$('#prompt').html(this.kana.katakana).css('display', 'none').fadeIn();
+			$('#helper').html('');
+		}
+	}
+	$('#answer-input').css('display', 'none').fadeIn();
 };
 
 KT.Round.prototype.checkAnswer = function () {
+	var syllabary = sessionStorage.syllabary;
 	var mode = sessionStorage.mode;
-	var correctKana = this.kana[mode];
-	var answer = $('#kana-input').val();
 
-	if (answer === correctKana) {
-		this.updateScore('correct');
-		round = KT.createRound(sessionStorage.mode);
-		round.displayRound();
-	} else {
-		this.updateScore('incorrect');
-		$('#kana-input').css('color', 'red');
-		console.log('incorrect input');
-		console.log('correct answer: ' + correctKana);	
+	var answer = $('#answer-input').val();
+
+	if (mode === 'typing') {
+		var correctKana = this.kana[syllabary];
+		if (answer === correctKana) {
+			this.updateScore('correct');
+			round = KT.createRound();
+			round.displayRound();
+		} else {
+			this.updateScore('incorrect');
+			$('#answer-input').css('color', 'red');
+			console.log('incorrect input');
+			console.log('correct answer: ' + correctKana);	
+		}
+	} else if (mode === 'reading') {
+		var correctSound = this.kana.sound;
+		if (answer === correctSound) {
+			this.updateScore('correct');
+			round = KT.createRound();
+			round.displayRound();
+		} else {
+			this.updateScore('incorrect');
+			$('#answer-input').css('color', 'red');
+			console.log('incorrect input');
+			console.log('correct answer: ' + correctSound);	
+		}
 	}
+};
+
+KT.Round.prototype.setSyllabary = function (syllabary) {
+	var mode = sessionStorage.mode;
+	console.log('setting syllabary to ' + syllabary);
+	$('.toggle-syllabary').removeClass('selected');
+	$('#toggle-' + syllabary).toggleClass('selected');
+
+	sessionStorage.syllabary = syllabary;
+	this.setPlaceholder();
 };
 
 KT.Round.prototype.setMode = function (mode) {
+	var syllabary = sessionStorage.syllabary;
 	console.log('setting mode to ' + mode);
-	$('.toggle').removeClass('selected');
+	$('.toggle-mode').removeClass('selected');
 	$('#toggle-' + mode).toggleClass('selected');
-	if (mode === 'hiragana') {
-		$('#kana-input').attr('placeholder', 'かな');
+
+	sessionStorage.mode = mode; 
+	this.setPlaceholder();
+}
+
+KT.Round.prototype.setPlaceholder = function () {
+	var syllabary = sessionStorage.syllabary;
+	var mode = sessionStorage.mode;
+
+	if (mode === 'reading') {
+		$('#answer-input').css('font-size', '5.65em');
+		$('#answer-input').attr('placeholder', 'romaji');
+	} else if (syllabary === 'hiragana' && mode === 'typing') {
+		$('#answer-input').css('font-size', '8em');
+		$('#answer-input').attr('placeholder', 'かな');
 	}
-	else if (mode === 'katakana') {
-		$('#kana-input').attr('placeholder', 'カナ');
+	else if (syllabary === 'katakana' && mode === 'typing') {
+		$('#answer-input').css('font-size', '8em');
+		$('#answer-input').attr('placeholder', 'カナ');
 	}
-	sessionStorage.mode = mode;
-};
+}
 
 KT.Round.prototype.setUpScoreBoard = function () {
 	sessionStorage.correct = 0;
@@ -69,7 +123,7 @@ KT.getRandKana = function () {
 	var kana = this.kana;
 	var r = Math.floor(Math.random() * this.kana.length);
 
-	if (sessionStorage.mode === 'hiragana' && !kana[r].hiragana) {
+	if (sessionStorage.syllabary === 'hiragana' && !kana[r].hiragana) {
 		this.getRandKana();
 	} else {
 		return kana[r];
@@ -89,23 +143,29 @@ KT.createRound = function () {
 
 var round = KT.createRound();
 round.setUpScoreBoard();
-round.setMode('hiragana');
+round.setSyllabary('hiragana');
+round.setMode('typing');
 round.displayRound();
 
-$('#kana-input').keypress(function (e) {
+$('#answer-input').keypress(function (e) {
 	if (e.which == 13 && $(this).val()) {
 		round.checkAnswer();
 	}
 });
 
-$('.toggle').click(function (e) {
+$('.toggle-syllabary').click(function (e) {
+	e.preventDefault();
+	round.setSyllabary($(this).data('value'));
+	console.log(round.kana.hiragana);
+	round = KT.createRound();
+	round.displayRound();
+});
+
+$('.toggle-mode').click(function (e) {
 	e.preventDefault();
 	round.setMode($(this).data('value'));
-	console.log(round.kana.hiragana);
-	if (!round.kana.hiragana) {
-		round = KT.createRound();
-		round.displayRound();
-	}
+	round = KT.createRound();
+	round.displayRound();
 });
 
 $('#skip').click(function (e) {

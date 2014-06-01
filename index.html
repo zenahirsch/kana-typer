@@ -9,12 +9,17 @@
 	<body>
 		<div id="wrapper">
 			<div class="row">
-				<div class="col half">
-					<div id="practicing-toggles">
-						practicing <a href="http://google.com" class="toggle" id="toggle-hiragana" data-value="hiragana">hiragana</a> / <a href="http://google.com" class="toggle" id="toggle-katakana" data-value="katakana">katakana</a>
+				<div class="col third left">
+					<div id="syllabary-toggles">
+						practicing <a href="" class="toggle-syllabary" id="toggle-hiragana" data-value="hiragana">hiragana</a> / <a href="" class="toggle-syllabary" id="toggle-katakana" data-value="katakana">katakana</a>
 					</div>
 				</div>
-				<div class="col half">
+				<div class="col third center">
+					<div id="mode-toggles">
+						mode <a href="" class="toggle-mode" id="toggle-typing" data-value="typing">typing</a> / <a href="" class="toggle-mode" id="toggle-reading" data-value="reading">reading</a>
+					</div>
+				</div>
+				<div class="col third right">
 					<div id="status-display">
 						<span class="score" id="score-correct">0</span> correct / <span class="score" id="score-incorrect">0</span> incorrect / <a id="skip" href="">skip</a>
 					</div>
@@ -22,7 +27,7 @@
 			</div>
 			<div class="row">
 				<div class="col full">
-					<div id="sound"></div>
+					<div id="prompt"></div>
 				</div>
 			</div>
 			<div class="row">
@@ -33,7 +38,7 @@
 			<div class="row">
 				<div class="col full">
 					<div id="kana">
-						<input type="text" placeholder="" name="kana-input" id="kana-input" />
+						<input type="text" placeholder="" name="answer-input" id="answer-input" />
 					</div>
 				</div>
 			</div>

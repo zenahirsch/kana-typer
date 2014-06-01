@@ -62,13 +62,9 @@ a:active {
 }
 
 .selected {
-	color: black !important;
-	border-bottom: solid 1px black;
+	color: rgba(100, 0, 100, 0.6) !important;
 	cursor: default;
-}
-
-#status-display {
-	text-align: right;
+	pointer-events: none;
 }
 
 .score {

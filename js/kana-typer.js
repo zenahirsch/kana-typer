@@ -7,30 +7,34 @@ KT.Round.prototype.resetColor = function () {
 KT.Round.prototype.displayRound = function () {
 	var mode = sessionStorage.mode;
 	var syllabary = sessionStorage.syllabary;
+	var prompt = $('#prompt');
+	var helper = $('#helper');
+	var input = $('#answer-input');
 
 	this.resetColor();
-	$('#answer-input').val('').focus();
+	input.val('').focus();
 
 	if (mode === 'typing') {
-		$('#prompt').html(this.kana.sound).css('display', 'none').fadeIn();
-		$('#helper').html(this.kana.helper).css('display', 'none').fadeIn();
+		prompt.html(this.kana.sound).css('display', 'none').fadeIn();
+		helper.html(this.kana.helper).css('display', 'none').css('visibility', 'visible').fadeIn();
 	} else if (mode === 'reading') {
 		if (syllabary === 'hiragana') {
-			$('#prompt').html(this.kana.hiragana).css('display', 'none').fadeIn();
-			$('#helper').html('');
+			prompt.html(this.kana.hiragana).css('display', 'none').fadeIn();
+			helper.html('no hint!').css('visibility', 'hidden');
 		} else if (syllabary === 'katakana') {
-			$('#prompt').html(this.kana.katakana).css('display', 'none').fadeIn();
-			$('#helper').html('');
+			prompt.html(this.kana.katakana).css('display', 'none').fadeIn();
+			helper.html('no hint!').css('visibility', 'hidden');
 		}
 	}
-	$('#answer-input').css('display', 'none').fadeIn();
+	input.css('display', 'none').fadeIn();
 };
 
 KT.Round.prototype.checkAnswer = function () {
 	var syllabary = sessionStorage.syllabary;
 	var mode = sessionStorage.mode;
+	var input = $('#answer-input');
 
-	var answer = $('#answer-input').val();
+	var answer = input.val();
 
 	if (mode === 'typing') {
 		var correctKana = this.kana[syllabary];
@@ -40,7 +44,7 @@ KT.Round.prototype.checkAnswer = function () {
 			round.displayRound();
 		} else {
 			this.updateScore('incorrect');
-			$('#answer-input').css('color', 'red');
+			input.css('color', 'red');
 			console.log('incorrect input');
 			console.log('correct answer: ' + correctKana);	
 		}
@@ -52,7 +56,7 @@ KT.Round.prototype.checkAnswer = function () {
 			round.displayRound();
 		} else {
 			this.updateScore('incorrect');
-			$('#answer-input').css('color', 'red');
+			input.css('color', 'red');
 			console.log('incorrect input');
 			console.log('correct answer: ' + correctSound);	
 		}
@@ -82,17 +86,18 @@ KT.Round.prototype.setMode = function (mode) {
 KT.Round.prototype.setPlaceholder = function () {
 	var syllabary = sessionStorage.syllabary;
 	var mode = sessionStorage.mode;
+	var input = $('#answer-input')
 
 	if (mode === 'reading') {
-		$('#answer-input').css('font-size', '5.65em');
-		$('#answer-input').attr('placeholder', 'romaji');
+		input.css('font-size', '5.65em');
+		input.attr('placeholder', 'romaji');
 	} else if (syllabary === 'hiragana' && mode === 'typing') {
-		$('#answer-input').css('font-size', '8em');
-		$('#answer-input').attr('placeholder', 'かな');
+		input.css('font-size', '8em');
+		input.attr('placeholder', 'かな');
 	}
 	else if (syllabary === 'katakana' && mode === 'typing') {
-		$('#answer-input').css('font-size', '8em');
-		$('#answer-input').attr('placeholder', 'カナ');
+		input.css('font-size', '8em');
+		input.attr('placeholder', 'カナ');
 	}
 }
 

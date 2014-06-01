@@ -5,34 +5,42 @@ KT.Round.prototype.resetColor = function () {
 };
 
 KT.Round.prototype.displayRound = function () {
-	var mode = sessionStorage.mode;
-	var syllabary = sessionStorage.syllabary;
+	this.parseQueryString();
+	var mode = this.params.mode;
+	var syllabary = this.params.syllabary;
 	var prompt = $('#prompt');
 	var helper = $('#helper');
 	var input = $('#answer-input');
 
+	this.setPlaceholder();
 	this.resetColor();
 	input.val('').focus();
 
 	if (mode === 'typing') {
 		prompt.css('font-size', '8em');
-		prompt.html(this.kana.sound).css('display', 'none').fadeIn();
-		helper.html(this.kana.helper).css('display', 'none').fadeIn();
+		if (this.kana[syllabary]) {
+			prompt.html(this.kana.sound).css('display', 'none').fadeIn();
+			helper.html(this.kana.helper).css('display', 'none').fadeIn();
+		} else {
+			round = KT.createRound();
+			round.displayRound();
+		}
 	} else if (mode === 'reading') {
 		prompt.css('font-size', '10.75em');
 		helper.css('display', 'none');
-		if (syllabary === 'hiragana') {
-			prompt.html(this.kana.hiragana).css('display', 'none').fadeIn();
-		} else if (syllabary === 'katakana') {
-			prompt.html(this.kana.katakana).css('display', 'none').fadeIn();
+		if (this.kana[syllabary]) {
+			prompt.html(this.kana[syllabary]).css('display', 'none').fadeIn();
+		} else {
+			round = KT.createRound();
+			round.displayRound();
 		}
 	}
 	input.css('display', 'none').fadeIn();
 };
 
 KT.Round.prototype.checkAnswer = function () {
-	var syllabary = sessionStorage.syllabary;
-	var mode = sessionStorage.mode;
+	var syllabary = this.params.syllabary;
+	var mode = this.params.mode;
 	var input = $('#answer-input');
 
 	var answer = input.val();
@@ -60,30 +68,12 @@ KT.Round.prototype.checkAnswer = function () {
 	}
 };
 
-KT.Round.prototype.setSyllabary = function (syllabary) {
-	var mode = sessionStorage.mode;
-	console.log('setting syllabary to ' + syllabary);
-	$('.toggle-syllabary').removeClass('selected');
-	$('#toggle-' + syllabary).toggleClass('selected');
-
-	sessionStorage.syllabary = syllabary;
-	this.setPlaceholder();
-};
-
-KT.Round.prototype.setMode = function (mode) {
-	var syllabary = sessionStorage.syllabary;
-	console.log('setting mode to ' + mode);
-	$('.toggle-mode').removeClass('selected');
-	$('#toggle-' + mode).toggleClass('selected');
-
-	sessionStorage.mode = mode; 
-	this.setPlaceholder();
-}
-
 KT.Round.prototype.setPlaceholder = function () {
-	var syllabary = sessionStorage.syllabary;
-	var mode = sessionStorage.mode;
-	var input = $('#answer-input')
+	var syllabary = this.params.syllabary;
+	var mode = this.params.mode;
+
+	console.log('setting placeholder to ' + syllabary);
+	var input = $('#answer-input');
 
 	if (mode === 'reading') {
 		input.css('font-size', '5.65em');
@@ -96,7 +86,69 @@ KT.Round.prototype.setPlaceholder = function () {
 		input.css('font-size', '8em');
 		input.attr('placeholder', 'カナ');
 	}
-}
+};
+
+KT.Round.prototype.setSyllabary = function (syllabary) {
+	console.log('setting syllabary to ' + syllabary);
+	this.params.syllabary = syllabary;
+	this.setQueryString();
+};
+
+KT.Round.prototype.setMode = function (mode) {
+	console.log('setting mode to ' + mode);
+	this.params.mode = mode;
+	this.setQueryString(); 
+};
+
+KT.Round.prototype.setQueryString = function () {
+	var params = this.params;
+	var str = '?' + jQuery.param(params);
+	window.location.search = str;
+};
+
+KT.Round.prototype.parseQueryString = function () {
+	var str = window.location.search.substring(1);
+	var queries = str.split('&');
+	var i = 0;
+	var query = '';
+
+	for (i = 0; i < queries.length; i++) {
+		query = queries[i].split('=');
+		this.params[query[0]] === query[1];
+	}
+};
+
+KT.getMode = function () {
+	var str = window.location.search.substring(1);
+	var queries = str.split('&');
+	var i = 0;
+	var mode = null;
+
+	for (i = 0; i < queries.length; i++) {
+		query = queries[i].split('=');
+		if (query[0] === 'mode') {
+			mode = query[1];
+		}
+	}
+
+	return mode;
+};
+
+KT.getSyllabary = function () {
+	var str = window.location.search.substring(1);
+	var queries = str.split('&');
+	var i = 0;
+	var syllabary = null;
+
+	for (i = 0; i < queries.length; i++) {
+		query = queries[i].split('=');
+		if (query[0] === 'syllabary') {
+			syllabary = query[1];
+		}
+	}
+
+	return syllabary;
+};
 
 KT.Round.prototype.setUpScoreBoard = function () {
 	sessionStorage.correct = 0;
@@ -106,7 +158,7 @@ KT.Round.prototype.setUpScoreBoard = function () {
 KT.Round.prototype.displayScore = function () {
 	$('#score-correct').html(sessionStorage.correct);
 	$('#score-incorrect').html(sessionStorage.incorrect);
-}
+};
 
 KT.Round.prototype.updateScore = function (result) {
 	var correct = Number(sessionStorage.correct);
@@ -125,11 +177,7 @@ KT.getRandKana = function () {
 	var kana = this.kana;
 	var r = Math.floor(Math.random() * this.kana.length);
 
-	if (sessionStorage.syllabary === 'hiragana' && !kana[r].hiragana) {
-		this.getRandKana();
-	} else {
-		return kana[r];
-	}
+	return kana[r];
 };
 
 KT.createRound = function () {
@@ -137,6 +185,13 @@ KT.createRound = function () {
 		'kana': {
 			value: this.getRandKana(),
 			writable: false
+		},
+		'params': {
+			value: { 
+				syllabary: this.getSyllabary(), 
+				mode: this.getMode() 
+			},
+			writable: true
 		}
 	});
 
@@ -145,8 +200,6 @@ KT.createRound = function () {
 
 var round = KT.createRound();
 round.setUpScoreBoard();
-round.setSyllabary('hiragana');
-round.setMode('typing');
 round.displayRound();
 
 $('#answer-input').keypress(function (e) {
@@ -158,7 +211,6 @@ $('#answer-input').keypress(function (e) {
 $('.toggle-syllabary').click(function (e) {
 	e.preventDefault();
 	round.setSyllabary($(this).data('value'));
-	console.log(round.kana.hiragana);
 	round = KT.createRound();
 	round.displayRound();
 });

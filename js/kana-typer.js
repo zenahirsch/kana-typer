@@ -1,7 +1,16 @@
 KT.Round = function () {};
 
-KT.Round.prototype.resetColor = function () {
-	$('#answer-input').css('color', 'rgba(100, 0, 100, 1)');
+KT.Round.prototype.resetInput = function () {
+	this.setPlaceholder();
+	$('#answer-input').css('color', 'rgba(100, 0, 100, 1)').val('').focus();
+};
+
+KT.Round.prototype.selectToggles = function (syllabary, mode) {
+	$('.toggle-syllabary').removeClass('selected');
+	$('#toggle-' + syllabary).addClass('selected');
+
+	$('.toggle-mode').removeClass('selected');
+	$('#toggle-' + mode).addClass('selected');
 };
 
 KT.Round.prototype.displayRound = function () {
@@ -12,9 +21,8 @@ KT.Round.prototype.displayRound = function () {
 	var helper = $('#helper');
 	var input = $('#answer-input');
 
-	this.setPlaceholder();
-	this.resetColor();
-	input.val('').focus();
+	this.resetInput();
+	this.selectToggles(syllabary, mode);
 
 	if (mode === 'typing') {
 		prompt.css('font-size', '8em');

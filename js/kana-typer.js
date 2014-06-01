@@ -50,12 +50,11 @@ KT.Round.prototype.checkAnswer = function () {
 	var syllabary = this.params.syllabary;
 	var mode = this.params.mode;
 	var input = $('#answer-input');
-
 	var answer = input.val();
 
 	if (mode === 'typing') {
 		var correctKana = this.kana[syllabary];
-		if (answer === correctKana) {
+		if (answer.toLowerCase() === correctKana.toLowerCase()) {
 			this.updateScore('correct');
 			round = KT.createRound();
 			round.displayRound();
@@ -65,7 +64,7 @@ KT.Round.prototype.checkAnswer = function () {
 		}
 	} else if (mode === 'reading') {
 		var correctSound = this.kana.sound;
-		if (answer === correctSound) {
+		if (answer.toLowerCase() === correctSound.toLowerCase()) {
 			this.updateScore('correct');
 			round = KT.createRound();
 			round.displayRound();

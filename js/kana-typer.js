@@ -17,15 +17,14 @@ KT.Round.prototype.displayRound = function () {
 	if (mode === 'typing') {
 		prompt.css('font-size', '8em');
 		prompt.html(this.kana.sound).css('display', 'none').fadeIn();
-		helper.html(this.kana.helper).css('display', 'none').css('visibility', 'visible').fadeIn();
+		helper.html(this.kana.helper).css('display', 'none').fadeIn();
 	} else if (mode === 'reading') {
 		prompt.css('font-size', '10.75em');
+		helper.css('display', 'none');
 		if (syllabary === 'hiragana') {
 			prompt.html(this.kana.hiragana).css('display', 'none').fadeIn();
-			helper.css('display', 'none');
 		} else if (syllabary === 'katakana') {
 			prompt.html(this.kana.katakana).css('display', 'none').fadeIn();
-			helper.css('display', 'none');
 		}
 	}
 	input.css('display', 'none').fadeIn();
@@ -47,8 +46,6 @@ KT.Round.prototype.checkAnswer = function () {
 		} else {
 			this.updateScore('incorrect');
 			input.css('color', 'red');
-			console.log('incorrect input');
-			console.log('correct answer: ' + correctKana);	
 		}
 	} else if (mode === 'reading') {
 		var correctSound = this.kana.sound;
@@ -59,8 +56,6 @@ KT.Round.prototype.checkAnswer = function () {
 		} else {
 			this.updateScore('incorrect');
 			input.css('color', 'red');
-			console.log('incorrect input');
-			console.log('correct answer: ' + correctSound);	
 		}
 	}
 };

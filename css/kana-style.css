@@ -108,6 +108,22 @@ a:active {
 	margin-top: 7em;
 }
 
+/* Kana Picker ------------------------------------ */
+#kana-picker {
+	display: none;
+}
+
+#kana-picker-table {
+	width: 100%;
+}
+
+#kana-picker-table td {
+	text-align: center;
+}
+
+#kana-picker-table input[type="checkbox"] {
+}
+
 /* Smartphones (portrait and landscape) ----------- */
 @media only screen 
 and (min-device-width : 320px) 

@@ -152,8 +152,8 @@ KT.kana = [
 		hiragana: 'つ',
 		katakana: 'ツ'
 	}, {
-		sound: 'du',
-		helper: 'as in <strong>doo</strong>dle',
+		sound: 'zu',
+		helper: 'as in <strong>zoo</strong>',
 		hiragana: 'づ',
 		katakana: 'ヅ'
 	}, {

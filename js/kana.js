@@ -142,8 +142,8 @@ KT.kana = [
 		hiragana: 'ち',
 		katakana: 'チ'
 	}, {
-		sound: 'di',
-		helper: 'as in la<strong>dy</strong>',
+		sound: 'ji',
+		helper: 'think of an example',
 		hiragana: 'ぢ',
 		katakana: 'ヂ'
 	}, {

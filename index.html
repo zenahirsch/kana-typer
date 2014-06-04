@@ -4,6 +4,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Kana Typer</title>
 	<link rel="stylesheet" type="text/css" href="css/kana-style.css" />
+	<link href="featherlight/release/featherlight.min.css" type="text/css" rel="stylesheet" title="Featherlight Styles" />
 	<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
 	</head>
 	<body>
@@ -12,6 +13,9 @@
 				<div class="col third left">
 					<div id="syllabary-toggles">
 						practicing <a href="" class="toggle-syllabary" id="toggle-hiragana" data-value="hiragana">hiragana</a> / <a href="" class="toggle-syllabary" id="toggle-katakana" data-value="katakana">katakana</a>
+					</div>
+					<div id="open-choose-kana">
+						<a href="#" data-featherlight="#kana-picker" id="open-choose-kana-link">Choose Kana</a>
 					</div>
 				</div>
 				<div class="col third center">
@@ -50,7 +54,7 @@
 				</div>
 			</div>
 
-			<div id="kana-picker">
+			<div class="hidden" id="kana-picker">
 				<div id="kana-picker-toggles" class="col half">
 					<a href="" class="toggle-kana-picker" id="toggle-select-all">select all</a> / 
 					<a href="" class="toggle-kana-picker" id="toggle-select-none">select none</a>
@@ -68,7 +72,6 @@
 					<tbody>
 					</tbody>
 				</table>
-
 			</div>
 
 		</div>
@@ -76,5 +79,9 @@
 		<script src="js/kana.js"></script>
     	<script src="js/kana-typer.js"></script>
     	<script src="js/kana-picker.js"></script>
+    	<script src="featherlight/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+    	<script>
+    		$('#open-choose-kana-link').featherlight();
+    	</script>
 	</body>
 </html>

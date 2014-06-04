@@ -14,9 +14,9 @@ KT.Round.prototype.selectToggles = function (syllabary, mode) {
 };
 
 KT.Round.prototype.displayRound = function () {
-	this.parseQueryString();
-	var mode = this.params.mode;
-	var syllabary = this.params.syllabary;
+	var mode = KT.getMode();
+	var syllabary = KT.getSyllabary();
+	console.log('the mode is: ' + mode);
 	var prompt = $('#prompt');
 	var helper = $('#helper');
 	var input = $('#answer-input');
@@ -47,8 +47,8 @@ KT.Round.prototype.displayRound = function () {
 };
 
 KT.Round.prototype.checkAnswer = function () {
-	var syllabary = this.params.syllabary;
-	var mode = this.params.mode;
+	var syllabary = KT.getSyllabary();
+	var mode = KT.getMode();
 	var input = $('#answer-input');
 	var answer = input.val();
 
@@ -76,10 +76,8 @@ KT.Round.prototype.checkAnswer = function () {
 };
 
 KT.Round.prototype.setPlaceholder = function () {
-	var syllabary = this.params.syllabary;
-	var mode = this.params.mode;
-
-	console.log('setting placeholder to ' + syllabary);
+	var syllabary = KT.getSyllabary();
+	var mode = KT.getMode();
 	var input = $('#answer-input');
 
 	if (mode === 'reading') {
@@ -97,36 +95,33 @@ KT.Round.prototype.setPlaceholder = function () {
 
 KT.Round.prototype.setSyllabary = function (syllabary) {
 	console.log('setting syllabary to ' + syllabary);
-	this.params.syllabary = syllabary;
-	this.setQueryString();
+	var kana = JSON.parse(sessionStorage.kana);
+	console.log('the kana in sessionStorage: ' + kana);
+	this.setQueryString('syllabary', syllabary);
 };
 
 KT.Round.prototype.setMode = function (mode) {
 	console.log('setting mode to ' + mode);
-	this.params.mode = mode;
-	this.setQueryString(); 
+	this.setQueryString('mode', mode); 
 };
 
-KT.Round.prototype.setQueryString = function () {
-	var params = this.params;
-	var str = '?' + jQuery.param(params);
-	window.location.search = str;
-};
+KT.Round.prototype.setQueryString = function (param, value) {
+	var hashStr = window.location.hash.substring(1);
+	var queries = hashStr.split('&');
+	var newStr = '';
 
-KT.Round.prototype.parseQueryString = function () {
-	var str = window.location.search.substring(1);
-	var queries = str.split('&');
-	var i = 0;
-	var query = '';
-
-	for (i = 0; i < queries.length; i++) {
-		query = queries[i].split('=');
-		this.params[query[0]] === query[1];
+	if (param === 'syllabary') {
+		newStr = '' + param + '=' + value + '&' + queries[1];
+	} else if (param === 'mode') {
+		newStr = '' + queries[0] + '&' + param + '=' + value;
 	}
+
+	console.log(newStr);
+	window.location.hash = '#' + newStr;
 };
 
 KT.getMode = function () {
-	var str = window.location.search.substring(1);
+	var str = window.location.hash.substring(1);
 	var queries = str.split('&');
 	var i = 0;
 	var mode = 'typing';
@@ -142,7 +137,7 @@ KT.getMode = function () {
 };
 
 KT.getSyllabary = function () {
-	var str = window.location.search.substring(1);
+	var str = window.location.hash.substring(1);
 	var queries = str.split('&');
 	var i = 0;
 	var syllabary = 'hiragana';
@@ -181,8 +176,8 @@ KT.Round.prototype.updateScore = function (result) {
 };
 
 KT.getRandKana = function () {
-	var kana = this.kana;
-	var r = Math.floor(Math.random() * this.kana.length);
+	var kana = JSON.parse(sessionStorage.kana);
+	var r = Math.floor(Math.random() * kana.length);
 
 	return kana[r];
 };

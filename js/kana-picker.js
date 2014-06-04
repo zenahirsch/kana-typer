@@ -17,6 +17,27 @@ select_none_toggle.click(function (e) {
 
 $('#choose-kana-link').click(function (e) {
 	e.preventDefault();
+	var checkboxes = $('.kana-checkbox');
+	var selectedIndices = [];
+
+	for (var i = 0, lc = checkboxes.length; i < lc; i++) {
+		if (checkboxes[i].checked) {
+			selectedIndices.push(checkboxes[i].value);
+		}
+	}
+
+	var selectedKana = [];
+	for (var x = 0, ls = selectedIndices.length; x < ls; x++) {
+		selectedKana.push(kana[selectedIndices[x]]);
+	}
+
+	console.log('resetting sessionStorage.kana');
+	sessionStorage.kana = JSON.stringify(selectedKana);
+	console.log(sessionStorage.kana);
+
+	round = KT.createRound();
+	round.setUpScoreBoard();
+	round.displayRound();
 	// take selected kana and modify KT.kana in sessionStorage
 });
 
@@ -28,7 +49,7 @@ for (i = 0; i < rows; i++) {
 	var sound = kana[i].sound;
 
 	new_row = '<tr id="kana-row-' + i + '">';
-	new_row += '<td><input type="checkbox" class="kana-checkbox" /></td>';
+	new_row += '<td><input type="checkbox" id="kana-checkbox-' + i + '" class="kana-checkbox" value="' + i + '" /></td>';
 	new_row += '<td>';
 	new_row += hiragana + katakana + '</td>';
 	new_row += '<td>' + sound + '</td>';
@@ -44,7 +65,7 @@ for (x = 0; x < Math.floor((kana.length / rows) + 1); x++) {
 			var katakana = kana[i].katakana;
 			var sound = kana[i].sound;
 
-			new_cell += '<td><input type="checkbox" class="kana-checkbox" /></td>';
+			new_cell += '<td><input type="checkbox" id="kana-checkbox-' + i + '" class="kana-checkbox" value="' + i + '" /></td>';
 			new_cell += '<td>';
 			new_cell += hiragana + katakana + '</td>';
 			new_cell += '<td>' + sound + '</td>';

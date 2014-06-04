@@ -393,3 +393,7 @@ KT.kana = [
 		katakana: 'ヺ'
 	}
 ];
+
+(function () {
+	sessionStorage.kana = JSON.stringify(KT.kana);
+})();

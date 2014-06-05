@@ -110,10 +110,15 @@ KT.Round.prototype.setQueryString = function (param, value) {
 	var queries = hashStr.split('&');
 	var newStr = '';
 
+	if (queries[0] === '') {
+		queries[0] = 'syllabary=hiragana';
+		queries[1] = 'mode=typing';
+	}
+
 	if (param === 'syllabary') {
 		newStr = '' + param + '=' + value + '&' + queries[1];
 	} else if (param === 'mode') {
-		newStr = '' + queries[0] + '&' + param + '=' + value;
+		newStr = queries[0] + '&' + param + '=' + value;
 	}
 
 	console.log(newStr);

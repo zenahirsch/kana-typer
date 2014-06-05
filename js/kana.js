@@ -394,6 +394,4 @@ KT.kana = [
 	}
 ];
 
-(function () {
-	sessionStorage.kana = JSON.stringify(KT.kana);
-})();
+sessionStorage.kana = JSON.stringify(KT.kana);

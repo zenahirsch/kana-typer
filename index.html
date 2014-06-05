@@ -55,21 +55,29 @@
 			</div>
 
 			<div class="hidden" id="kana-picker">
-				<div id="kana-picker-toggles" class="col half">
-					<a href="" class="toggle-kana-picker" id="toggle-select-all">select all</a> / 
-					<a href="" class="toggle-kana-picker" id="toggle-select-none">select none</a>
+				<div class="row">
+					<div id="kana-picker-toggles" class="col half">
+						<a href="" class="toggle-kana-picker" id="toggle-select-all">select all</a> / 
+						<a href="" class="toggle-kana-picker" id="toggle-select-none">select none</a>
+					</div>
 				</div>
 
-				<div id="kana-picker-submit" class="col half right">
-					<a href="" id="choose-kana-link">choose these kana</a>
+				<div class="row">
+					<div id="kana-picker-table">
+						<table id="kana-picker-table">
+							<thead>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
 				</div>
 
-				<table id="kana-picker-table">
-					<thead>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
+				<div class="row">
+					<div id="kana-picker-submit" class="col right">
+						<button class="warning-button pick-kana-button" id="choose-kana-link">choose at least one</button>
+					</div>
+				</div>
 			</div>
 
 		</div>

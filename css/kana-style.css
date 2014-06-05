@@ -49,6 +49,10 @@ a:active {
 	float: left;
 }
 
+.half div { 
+	margin-bottom: 0.25em;
+}
+	
 .left {
 	text-align: left;
 }
@@ -113,6 +117,19 @@ a:active {
 	display: none;
 }
 
+.warning-button {
+	background-color: rgba(255, 0, 0, 0.3) !important;
+	cursor: default !important;
+}
+
+#kana-picker .row {
+	margin-bottom: 1em;
+}
+
+#kana-picker .row:last-of-type {
+	margin-bottom: 0;
+}
+
 #kana-picker-table {
 	width: 100%;
 }
@@ -121,7 +138,21 @@ a:active {
 	text-align: center;
 }
 
-#kana-picker-table input[type="checkbox"] {
+#choose-kana-link {
+	background-color: rgba(100, 0, 100, 0.5);
+	border: none;
+	padding: 1em;
+	color: white;
+	border-radius: 10px;
+}
+
+#choose-kana-link:hover {
+	background-color: rgba(100, 0, 100, 0.4);
+	cursor: pointer;
+}
+
+#choose-kana-link:focus {
+	outline: none;
 }
 
 /* Smartphones (portrait and landscape) ----------- */

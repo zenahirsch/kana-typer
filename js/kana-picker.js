@@ -39,21 +39,29 @@ $(function () {
 	var select_all_toggle = $('#toggle-select-all');
 	var select_none_toggle = $('#toggle-select-none');
 
+	$('.kana-checkbox').change(function (e) {
+		$('.pick-kana-button').removeClass('warning-button');
+		$('.pick-kana-button').html('choose these kana');
+	});
+
 	select_all_toggle.click(function (e) {
 		e.preventDefault();
 		console.log('clicked select_all_toggle');
 		$('.kana-checkbox').prop('checked', true);
+		$('.pick-kana-button').removeClass('warning-button');
+		$('.pick-kana-button').html('choose these kana');
 	});
 
 	select_none_toggle.click(function (e) {
 		e.preventDefault();
 		console.log('clicked select_none_toggle');
 		$('.kana-checkbox').prop('checked', false);
+		$('.pick-kana-button').addClass('warning-button');
+		$('.pick-kana-button').html('choose at least one');
 	});
 
 	$('#choose-kana-link').click(function (e) {
 		e.preventDefault();
-		console.log('clicked choose-kana-link');
 		var checkboxes = $('.kana-checkbox');
 		var selectedIndices = [];
 
@@ -68,12 +76,17 @@ $(function () {
 			selectedKana.push(kana[selectedIndices[x]]);
 		}
 
-		console.log('resetting sessionStorage.kana');
-		sessionStorage.kana = JSON.stringify(selectedKana);
-		console.log(sessionStorage.kana);
+		if (selectedKana.length > 0) {
+			sessionStorage.kana = JSON.stringify(selectedKana);
+			round = KT.createRound();
+			round.setUpScoreBoard();
+			round.displayRound();
+			$.featherlight.current().close();
+		} else {
+			console.log('none picked');
+			$('.pick-kana-button').addClass('warning-button');
+			$('.pick-kana-button').html('choose at least one');
 
-		round = KT.createRound();
-		round.setUpScoreBoard();
-		round.displayRound();
+		}
 	});
 });

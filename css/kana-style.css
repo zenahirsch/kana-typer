@@ -67,6 +67,7 @@ a:active {
 
 .selected {
 	color: rgba(100, 0, 100, 0.6) !important;
+	font-weight: bold;
 	cursor: default;
 	pointer-events: none;
 }

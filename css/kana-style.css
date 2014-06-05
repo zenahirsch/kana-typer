@@ -169,7 +169,7 @@ and (max-device-width : 480px) {
 		width: 900px;
 	}
 
-	.third {
+	.half {
 		clear: left;
 		width: 100%;
 		margin-bottom: 0.5em;

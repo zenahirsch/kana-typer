@@ -76,7 +76,7 @@ $(function () {
 			selectedKana.push(kana[selectedIndices[x]]);
 		}
 
-		if (selectedKana.length > 0) {
+		if (selectedKana.length) {
 			sessionStorage.kana = JSON.stringify(selectedKana);
 			round = KT.createRound();
 			round.setUpScoreBoard();
